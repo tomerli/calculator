@@ -52,3 +52,6 @@ jobs:
         with:
           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
           publish_dir: ./build
+
+      - name: Run Testim
+        run:  npm i -g @testim/testim-cli && testim -c myConfigSL_Calc.js --suite "Calc"
