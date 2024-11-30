@@ -53,5 +53,14 @@ jobs:
           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
           publish_dir: ./build
     
+      - name: Debug File Location
+        run: |
+          pwd
+          ls -l
+          find . -name myConfigSL_Calc.js
+    
       - name: Run Testim
-        run:  npm i -g @testim/testim-cli && testim -c "${{ github.workspace }}/myConfigSL_Calc.js" --suite "Calc"
+        run: |
+          echo "Current workspace: ${{ github.workspace }}"
+          npm i -g @testim/testim-cli
+          testim -c "$(pwd)/myConfigSL_Calc.js" --suite "Calc"
