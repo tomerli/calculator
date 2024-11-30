@@ -16,6 +16,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1  # Ensures full checkout
+      - name: List files
+        run: |
+          pwd
+          ls -la
+          find . -name myConfigSL_Calc.js
 
       - name: Installing Node.js
         uses: actions/setup-node@v1
@@ -41,12 +48,23 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          
       - name: Downloading artifact
         uses: actions/download-artifact@v4
         with:
           name: production-files
           path: ./build
 
+      - name: List files
+        run: |
+          pwd
+          ls -la
+          find . -name myConfigSL_Calc.js
+          
       - name: Deploying to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -60,7 +78,6 @@ jobs:
           find . -name myConfigSL_Calc.js
     
       - name: Run Testim
-        working-directory: ${{ github.workspace }}
         run: |
           npm i -g @testim/testim-cli
           testim -c "./myConfigSL_Calc.js" --suite "Calc"
