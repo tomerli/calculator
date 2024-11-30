@@ -52,13 +52,6 @@ jobs:
         with:
           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
           publish_dir: ./build
-
-      - name: Check working directory
-        run: |
-          pwd
-          ls -l
-          ls -l myConfigSL_Calc.js
-          ls -l ./build
     
       - name: Run Testim
-        run:  npm i -g @testim/testim-cli && testim -c "myConfigSL_Calc.js" --suite "Calc"
+        run:  npm i -g @testim/testim-cli && testim -c "${{ github.workspace }}/myConfigSL_Calc.js" --suite "Calc"
