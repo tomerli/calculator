@@ -1,38 +1,57 @@
-name: Deploy React App to GitHub Pages
+name: Build & deploy
 
 on:
   push:
     branches:
-      - main  # Deploy only when pushing to the main branch
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Installing Node.js
+        uses: actions/setup-node@v1
         with:
-          node-version: '20'  # Specify the Node.js version
+          node-version: 16.x
 
-      # Step 3: Install dependencies
-      - name: Install Dependencies
-        run: npm install
+      - name: Installing NPM packages
+        run: npm ci
 
-      # Step 4: Build the React app
-      - name: Build React App
+      - name: Building project
         run: npm run build
 
-      # Step 5: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        run: npm run deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+      - name: Running tests
+        run: npm run test
 
-      - name: Run Testim
-        run:  npm i -g @testim/testim-cli && testim -c myConfigSL_Calc.js --suite "Calc"
+      - name: Uploading production-ready build files
+        uses: actions/upload-artifact@v2
+        with:
+          name: production-files
+          path: ./build
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Downloading artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: production-files
+          path: ./build
+
+      - name: Deploying to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
