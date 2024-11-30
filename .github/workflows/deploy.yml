@@ -33,3 +33,6 @@ jobs:
         run: npm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+
+      - name: Run Testim
+        run:  npm i -g @testim/testim-cli && testim -c myConfigSL_Calc.js --suite "Calc"
