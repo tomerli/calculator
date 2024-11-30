@@ -60,7 +60,7 @@ jobs:
           find . -name myConfigSL_Calc.js
     
       - name: Run Testim
+        working-directory: ${{ github.workspace }}
         run: |
-          echo "Current workspace: ${{ github.workspace }}"
           npm i -g @testim/testim-cli
-          testim -c "$(pwd)/myConfigSL_Calc.js" --suite "Calc"
+          testim -c "./myConfigSL_Calc.js" --suite "Calc"
