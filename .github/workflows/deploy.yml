@@ -54,4 +54,4 @@ jobs:
           publish_dir: ./build
 
       - name: Run Testim
-        run:  npm i -g @testim/testim-cli && testim -c myConfigSL_Calc.js --suite "Calc"
+        run:  npm i -g @testim/testim-cli && testim -c "./myConfigSL_Calc.js" --suite "Calc"
