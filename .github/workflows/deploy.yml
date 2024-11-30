@@ -76,6 +76,10 @@ jobs:
           pwd
           ls -l
           find . -name myConfigSL_Calc.js
+
+      - name: Install Dependencies
+        run: |
+          npm install axios  # Install axios specifically
     
       - name: Run Testim
         run: |
