@@ -23,7 +23,7 @@ jobs:
           node-version: 21.x
 
       - name: Installing NPM packages
-        run: npm ci
+        run: npm install
 
       - name: Building project
         run: npm run build
