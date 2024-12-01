@@ -43,11 +43,6 @@ jobs:
       - name: Install SL agent
         run: npm i slnodejs
 
-      - name: Check node_modules location
-        run: |
-          pwd
-          ls -latr node_modules
-
       - name: Generate build session Id
         run: node_modules/slnodejs/lib/cli.js config --tokenfile ./sltoken.txt --appname "Testim-Calculator" --build "4.0" --branch "Main"
 
@@ -58,7 +53,11 @@ jobs:
         run: |
           mv ./build ./build_original
           mv ./sl_build ./build
-          
+
+      - name: List files
+        run: |
+          pwd
+          ls -la
 
   deploy:
     name: Deploy
