@@ -66,10 +66,10 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+      #- name: Checkout code
+      #  uses: actions/checkout@v4
+      #  with:
+      #    fetch-depth: 1
           
       - name: Downloading artifact
         uses: actions/download-artifact@v4
