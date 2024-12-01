@@ -46,13 +46,13 @@ jobs:
       - name: Check node_modules location
         run: |
           pwd
-          ls node_modules
+          ls -la node_modules/slnodejs
 
       - name: Generate build session Id
-        run: /home/runner/work/calculator/calculator/node_modules/slnodejs config --tokenfile ./sltoken.txt --appname "Testim-Calculator" --build "4.0" --branch "Main"
+        run: node_modules/slnodejs config --tokenfile ./sltoken.txt --appname "Testim-Calculator" --build "4.0" --branch "Main"
 
       - name: Scan and instrument the build
-        run: /home/runner/work/calculator/calculator/node_modules/slnodejs scan --tokenfile ./sltoken.txt --buildsessionidfile ./buildSessionId --instrumentForBrowsers --workspacepath ./build --outputpath ./sl_build --scm none
+        run: node_modules/slnodejs scan --tokenfile ./sltoken.txt --buildsessionidfile ./buildSessionId --instrumentForBrowsers --workspacepath ./build --outputpath ./sl_build --scm none
 
       - name: Switch between the builds
         run: |
