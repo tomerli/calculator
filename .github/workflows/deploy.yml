@@ -38,7 +38,7 @@ jobs:
         run: npm i slnodejs
 
       - name: Generate build session Id
-        run: node_modules/slnodejs/lib/cli.js config --tokenfile ./sltoken.txt --appname "Testim-Calculator" --build "7.0" --branch "Main"
+        run: node_modules/slnodejs/lib/cli.js config --tokenfile ./sltoken.txt --appname "Testim-Calculator" --build "8.0" --branch "Main"
 
       - name: Scan and instrument the build
         run: node_modules/slnodejs/lib/cli.js scan --tokenfile ./sltoken.txt --buildsessionidfile ./buildSessionId --instrumentForBrowsers --workspacepath ./build --outputpath ./sl_build --scm none
@@ -66,10 +66,10 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      #- name: Checkout code
-      #  uses: actions/checkout@v4
-      #  with:
-      #    fetch-depth: 1
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
           
       - name: Downloading artifact
         uses: actions/download-artifact@v4
