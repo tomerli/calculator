@@ -38,8 +38,8 @@ jobs:
       - name: Install SL agent
         run: npm i slnodejs
 
-      - name: Generate build session Id
-        run: node_modules/slnodejs/lib/cli.js config --tokenfile ./sltoken.txt --appname "Testim-Calculator" --build "11.0" --branch "Main"
+      #- name: Generate build session Id
+      #  run: node_modules/slnodejs/lib/cli.js config --tokenfile ./sltoken.txt --appname "Testim-Calculator" --build "12.0" --branch "Main"
 
       - name: Scan and instrument the build
         run: node_modules/slnodejs/lib/cli.js scan --tokenfile ./sltoken.txt --buildsessionidfile ./buildSessionId --instrumentForBrowsers --workspacepath ./build --outputpath ./sl_build --scm none
