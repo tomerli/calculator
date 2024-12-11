@@ -23,6 +23,7 @@ const fs = require('fs');
 
 const testStage = 'E2E Tests';
 
+let labId = "";
 let bsid = "";
 let sl_agent_token = "";
 
@@ -89,6 +90,7 @@ async function createTestSession(){
         };
 
         const requestBody = {
+            labId: labId,
             testStage: testStage,
             bsid: bsid
         };
