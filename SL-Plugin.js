@@ -12,16 +12,18 @@
 
 checkifModuleExists('sync-request');
 checkifModuleExists('fs');
+checkifModuleExists('axios');
 
 //need to install the following node modules
 const request = require('sync-request');
 const fs = require('fs');
+const axios = require('axios');
 
 let sl_agent_token = '';
 let baseUrl = 'https://tricentis-demo.sealights.co/sl-api';
 let labId = ''; 
 let bsid = ''; 
-let stageName = 'Regression';
+let stageName = 'Testim Tests';
 let testSessionId = null;
 
 const testResults = []; // To collect test results during the test execution
@@ -36,6 +38,10 @@ const statusMap = {
 
 // Initialize SL vars before running tests
 init();
+
+// An example of excluding test cases - change the status to quarantine
+// the list of test IDs should be provided by Sealights
+//excludeTests();
 
 exports.config = {
     grid:       "Testim-Grid",
@@ -80,6 +86,7 @@ exports.config = {
 		}
 	}
 };
+
 
 // Function to create a test session
 function createTestSession() {
@@ -159,6 +166,39 @@ function endTestSession(sessionId) {
     }
 }
 
+
+function excludeTests() {
+
+    let testId = 'SEfrjHS5KrLMC9fT';
+    let newStatus = 'quarantine';
+
+    updateTestStatus(testId, newStatus)
+    .then(response => {
+        console.log("Test [" + testId + " ] status was successfully changed to [" + newStatus + "]");
+    })
+    .catch(error => {
+        console.error('Error in updateTestStatus: ', error.response.data);
+    });
+}
+
+
+function updateTestStatus(testId, newStatus) {
+     const apiUrl = 'https://api.testim.io/tests/' + testId + '/status';
+     const payload = {
+       branch: 'master',
+       status: newStatus
+     };
+     const headers = {
+       'Authorization': 'Bearer PAK-fa/y3v/uKpBPxd-KSPmDTJKanRL+R5G5jnLfvhdtLLPaRePLzUMunPdPupFKejRbaqE8q0Nmhz2hm851z',
+       'Content-Type': 'application/json',
+       'accept': 'application/json'
+     };
+
+     return axios.put(apiUrl, payload, { headers });
+};
+
+
+
 // *** HELPER FUNCTIONS ***
 
 // Initialization function to set baseUrl, labId, bsid, and stageName
@@ -171,7 +211,7 @@ function init() {
         let providedToken = process.env.SEALIGHTS_AGENT_TOKEN || '';
         let providedLabId = '';
         let providedBsid = '';
-        let providedStageName = 'Regression'; // Default stage name
+        let providedStageName = 'Testim Tests'; // Default stage name
 
         /******* get buildSessionId *******/
         let data = fs.readFileSync("./buildSessionId", 'utf8');
@@ -197,8 +237,6 @@ function init() {
             providedBsid = settings.bsid || '';
         }*/
 
-        
-
         // Validate mandatory fields
         if (!providedToken) {
             throw new Error('[Sealights] Token is required. Please set the SEALIGHTS_AGENT_TOKEN environment variable or define token in the settings JSON file.');
@@ -222,6 +260,7 @@ function init() {
         global.bsid = providedBsid;
         global.stageName = providedStageName;
         global.labId = providedLabId || providedBsid;
+        //global.labId = '';
 
         console.log(`[Sealights] Base URL initialized: ${global.baseUrl}`);
         console.log(`[Sealights] BSID: ${global.bsid}, LabId: ${global.labId}, StageName: ${global.stageName}`);
