@@ -45,8 +45,8 @@ init();
 
 exports.config = {
     grid:       "Testim-Grid",
-    project:    "8iuIg6jOYNgj5YnNs5RJ",
-    token:      "HFPMMWmDBgphmMFNcfS4oxVts7JPyZChVl1rYgGXBPs5pkKT8C",
+    project:    "<PROJECT ID>",
+    token:      "<TOKEN>",
     branch:     "master",
 
 	beforeSuite(suite) {
@@ -189,7 +189,7 @@ function updateTestStatus(testId, newStatus) {
        status: newStatus
      };
      const headers = {
-       'Authorization': 'Bearer PAK-fa/y3v/uKpBPxd-KSPmDTJKanRL+R5G5jnLfvhdtLLPaRePLzUMunPdPupFKejRbaqE8q0Nmhz2hm851z',
+       'Authorization': 'Bearer [TESTIM API TOKEN]',
        'Content-Type': 'application/json',
        'accept': 'application/json'
      };
