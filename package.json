@@ -1,18 +1,17 @@
 {
-  "homepage": "https://tomerli.github.io/calculator",
   "name": "calculator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts --openssl-legacy-provider start",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -33,5 +32,10 @@
   "devDependencies": {
     "@babel/preset-react": "^7.22.5",
     "gh-pages": "^6.2.0"
-  }
+  },
+  "main": "SL-Plugin.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
